@@ -1,12 +1,10 @@
 
 # Building a SOC + Honeynet in Azure (Live Traffic)
+# Azure Honeynet Project
+
+## Project Overview
+
 ![image](https://github.com/kphillip1/azure-soc-honeynet/assets/165929885/ca6ef315-dcbf-4176-b90f-c46a6bbf0459)
-
-<h2>Video Demonstration</h2>
-
-- ### [YouTube: How To Build a SOC + Honeynet in Azure](https://youtu.be/mOjbD7FkUUI)
-
-[![How To Build a SOC + Honeynet in Azure](https://img.youtube.com/vi/mOjbD7FkUUI/0.jpg)](https://www.youtube.com/watch?v=mOjbD7FkUUI)
 
 
 ## Introduction
@@ -18,6 +16,16 @@ In this project, I build a mini honeynet in Azure and ingest logs from various r
 - SecurityAlert (Log Analytics Alerts Triggered)
 - SecurityIncident (Incidents created by Sentinel)
 - AzureNetworkAnalytics_CL (Malicious Flows allowed into our honeynet)
+
+### Components
+
+- **Virtual Network (VNet)**: Isolates and segments network resources.
+- **Network Security Group (NSG)**: Controls inbound and outbound traffic to network interfaces and VMs.
+- **Virtual Machines**: 2 Windows VMs and 1 Linux VM to simulate a diverse environment.
+- **Log Analytics Workspace**: Centralized repository for collecting and analyzing log data.
+- **Azure Key Vault**: Securely manages keys, secrets, and certificates.
+- **Azure Storage Account**: Stores data, such as logs and other diagnostic information.
+- **Microsoft Sentinel**: Cloud-native SIEM that provides intelligent security analytics and threat intelligence.
 
 ## Architecture Before Hardening / Security Controls
 ![image](https://github.com/kphillip1/azure-soc-honeynet/assets/165929885/efa182b3-afe3-46d6-b431-84fe61c1daff)
@@ -105,3 +113,52 @@ It is worth noting that if the resources within the network were heavily utilize
 | SecurityAlert (Microsoft Defender for Cloud) | Security Alert<br>\| where DisplayName !startswith "CUSTOM" and DisplayName !startswith "TEST"<br>\| where TimeGenerated >= ago(24h)<br>\| count |
 | Security Incident (Sentinel Incidents)       | SecurityIncident<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                               |
 | NSG Inbound Malicious Flows Allowed          | AzureNetworkAnalytics_CL<br>\| where FlowType_s == "MaliciousFlow" and AllowedInFlows_d > 0<br>\| where TimeGenerated >= ago(24h)<br>\| count    |
+
+## Security Events (Windows VMs)
+SecurityEvent
+| where TimeGenerated >= ago(24h)
+| count
+
+## Syslog (Linux VMs)
+Syslog
+| where TimeGenerated >= ago(24h)
+| count
+
+## SecurityAlert (Microsoft Defender for Cloud)
+Security Alert
+| where DisplayName !startswith "CUSTOM" and DisplayName !startswith "TEST"
+| where TimeGenerated >= ago(24h)
+| count
+
+
+## Security Incident (Sentinel Incidents)
+SecurityIncident
+| where TimeGenerated >= ago(24h)
+| count
+
+## NSG Inbound Malicious Flows Allowed
+AzureNetworkAnalytics_CL
+| where FlowType_s == "MaliciousFlow" and AllowedInFlows_d > 0
+| where TimeGenerated >= ago(24h)
+| count
+
+## How to Use
+Clone the Repository
+git clone https://github.com/yourusername/azure-honeynet-project.git
+cd azure-honeynet-project
+Deploy the Infrastructure
+
+Follow the instructions in the Deployment section to set up the Azure resources.
+Configure Logging and Monitoring
+
+Configure the Log Analytics Workspace and connect the VMs to it.
+Analyze Logs and Metrics
+
+Use the provided KQL queries to analyze logs and metrics before and after applying security controls.
+Apply Security Controls
+
+Implement the recommended security controls as described in the Hardening section.
+Compare Results
+
+Measure the metrics again and compare the results to evaluate the effectiveness of the security controls.
+
