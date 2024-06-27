@@ -142,7 +142,7 @@ AzureNetworkAnalytics_CL
 | where TimeGenerated >= ago(24h)
 | count
 
-## How to Use
+How to Use
 Clone the Repository
 
 git clone https://github.com/yourusername/azure-honeynet-project.git
@@ -150,12 +150,21 @@ cd azure-honeynet-project
 
 Deploy the Infrastructure
 Follow the instructions in the Deployment section to set up the Azure resources.
-Configure Logging and Monitoring
-Configure the Log Analytics Workspace and connect the VMs to it.
-Analyze Logs and Metrics
-Use the provided KQL queries to analyze logs and metrics before and after applying security controls.
-Apply Security Controls
-Implement the recommended security controls as described in the Hardening section.
-Compare Results
-Measure the metrics again and compare the results to evaluate the effectiveness of the security controls.
+Ensure you have the necessary Azure subscription and permissions to deploy resources.
 
+Configure Logging and Monitoring
+Set up the Log Analytics Workspace.
+Connect the Virtual Machines (VMs) to the Log Analytics Workspace for log collection.
+Configure data collection rules and diagnostics settings.
+
+Analyze Logs and Metrics
+Use the provided KQL queries to analyze logs and metrics in the Log Analytics Workspace.
+Review the security events, syslog data, security alerts, and incidents before and after applying security controls.
+
+Apply Security Controls
+Implement the recommended security controls to harden the environment.
+These may include updating NSG rules, enabling threat detection features, and applying security policies.
+
+Compare Results
+Measure the metrics again after applying the security controls.
+Compare the before and after metrics to evaluate the effectiveness of the security measures.
